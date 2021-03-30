@@ -1,7 +1,7 @@
 ## Getting Started
 
 ```
-git clone INSERE AQUI ESPERTA
+git clone https://github.com/LarissaAzevedo/AvatarUpload.git
 cd /avatarupload
 
 npm install 
