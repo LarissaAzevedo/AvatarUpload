@@ -1,0 +1,82 @@
+.App {
+  margin: auto;
+  width: 600px;
+  height: 250px;
+  border: 2px dashed #c7cdd3;
+  background: #f2f5f8;
+  border-radius: 8px;
+}
+
+.fileInput {
+  width: 600px;
+  height: 250px;
+  background: #f2f5f8;
+  border: 2px dashed #c7cdd3;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cropContainer {
+  display: flex;
+  justify-content: space-around;
+  height: 200px;
+}
+
+.cropContainer div:nth-child(1) {
+  flex-wrap: wrap;
+  position: absolute;
+  top: 421px;
+  left: 30%;
+  width: 250px;
+  height: 240px;
+}
+
+.cropContainer div {
+  width: 270px;
+  height: 240px;
+}
+
+.controls {
+  width: 250px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  left: 60%;
+  top: 460px;
+  transform: translateX(-50%);
+}
+
+.slider {
+  padding: 22px 0px;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  width: 85%;
+  margin: auto;
+  align-items: flex-end;
+}
+
+.save {
+  background: #3d485f;
+  border-radius: 16px;
+  color: white;
+  padding: 5px;
+  width: 109px;
+}
+
+.close {
+  position: absolute;
+  top: 437px;
+  left: 906px;
+  font-size: 16px;
+  text-transform: uppercase;
+  background: #f2f5f8;
+  border: none;
+  color: #677489;
+  font-weight: bold;
+}

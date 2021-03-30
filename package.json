@@ -5,11 +5,25 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "test": "jest",
+    "test:watch": "yarn test --watch"
   },
   "dependencies": {
+    "@material-ui/core": "^4.11.3",
     "next": "10.0.9",
     "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react-dom": "17.0.2",
+    "react-easy-crop": "^3.3.2",
+    "sass": "^1.32.8"
+  },
+  "devDependencies": {
+    "@testing-library/dom": "^7.30.1",
+    "@testing-library/jest-dom": "^5.11.10",
+    "@testing-library/react": "^11.2.5",
+    "@testing-library/user-event": "^13.0.16",
+    "@types/jest": "^26.0.22",
+    "babel-jest": "^26.6.3",
+    "jest": "^26.6.3"
   }
 }
