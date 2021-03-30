@@ -75,6 +75,7 @@ export default function AvatarUpload() {
           </div>
           <div className={styles.actions}>
             <div className={styles.controls}>
+              <span className={styles.label}>Crop</span>
               <Slider
                 aria-label="image crop adjustment"
                 value={zoom}

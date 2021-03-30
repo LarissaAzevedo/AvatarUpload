@@ -25,12 +25,18 @@
 }
 
 .cropContainer div:nth-child(1) {
-  flex-wrap: wrap;
-  position: absolute;
-  top: 421px;
-  left: 30%;
-  width: 250px;
-  height: 240px;
+  margin-top: 3px;
+  margin-left: -315px;
+
+  top: inherit;
+  left: initial;
+  right: initial;
+  bottom: initial;
+  overflow: hidden;
+}
+
+.cropContainer div > div {
+  color: #f2f5f8;
 }
 
 .cropContainer div {
@@ -39,14 +45,20 @@
 }
 
 .controls {
-  width: 250px;
+  min-width: 250px;
+  max-width: 250px;
   height: 80px;
   display: flex;
   align-items: center;
-  position: absolute;
-  left: 60%;
-  top: 460px;
+  position: relative;
+  bottom: 115px;
+  left: 135px;
   transform: translateX(-50%);
+}
+
+.label {
+  position: absolute;
+  top: 0px;
 }
 
 .slider {
@@ -66,13 +78,16 @@
   border-radius: 16px;
   color: white;
   padding: 5px;
+  position: relative;
   width: 109px;
+  bottom: 90px;
+  left: 8px;
 }
 
 .close {
-  position: absolute;
-  top: 437px;
-  left: 906px;
+  position: relative;
+  bottom: 296px;
+  left: 560px;
   font-size: 16px;
   text-transform: uppercase;
   background: #f2f5f8;
