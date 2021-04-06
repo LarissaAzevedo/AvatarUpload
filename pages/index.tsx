@@ -1,4 +1,4 @@
-import AvatarUpload from "../components/AvatarUpload";
+import { AvatarUpload } from "../components/AvatarUpload";
 
 import styles from "../styles/Home.module.scss";
 
