@@ -1,37 +1,26 @@
+import React from "react";
 import styles from "../../styles/AvatarUpload.module.scss";
 import Slider from "@material-ui/core/Slider";
 import Cropper from "react-easy-crop";
 import { useState } from "react";
-// import { AvatarUpload } from "../../types";
+import { CroppedAreaPixels, Crop } from "../../types";
+import { readFile } from "../../utils/readFile";
 
-function readFile(file) {
-  return new Promise((resolve) => {
-    const reader = new FileReader();
-    reader.addEventListener("load", () => resolve(reader.result), false);
-    reader.readAsDataURL(file);
-  });
-}
+export const AvatarUpload: React.FC = () => {
+  const [crop, setCrop] = useState<Crop>({ x: 0, y: 0 });
+  const [zoom, setZoom] = useState<number>(1);
+  const [imageSrc, setImageSrc] = useState<string>();
+  const [finalImage, setFinalImage] = useState<string>();
+  const aspect: number = 1;
 
-export const AvatarUpload = () => {
-  const [crop, setCrop] = useState({ x: 0, y: 0 });
-  const [zoom, setZoom] = useState("1");
-  const [imageSrc, setImageSrc] = useState();
-  const [finalImage, setFinalImage] = useState();
-  const aspect = 1;
-
-  // useEffect(() => {
-  //   if (imageSrc === undefined) {
-  //     setFinalImage(undefined);
-  //   }
-  // }, [finalImage]);
-
-  const onCropChange = (crop) => {
+  const onCropChange = (crop: Crop) => {
     setCrop(crop);
   };
 
-  const onCropComplete = (croppedArea, croppedAreaPixels) => {
-    console.log(croppedAreaPixels.width / croppedAreaPixels.height);
-    setFinalImage(imageSrc);
+  const onCropComplete = (croppedAreaPixels: CroppedAreaPixels) => {
+    console.log(`croppedAreaPixels`, croppedAreaPixels)
+    // console.log(croppedAreaPixels.width / croppedAreaPixels.height);
+    // setFinalImage(imageSrc);
   };
 
   const onZoomChange = (zoom) => {
@@ -51,12 +40,10 @@ export const AvatarUpload = () => {
     setImageSrc(undefined);
   };
 
-  const handleSave = (croppedAreaPercentage, croppedAreaPixels) => {
-    // Deve salvar
-    console.log("croppedAreaPercentage :>> ", croppedAreaPercentage);
-    console.log("croppedAreaPixels :>> ", croppedAreaPixels);
+  const handleSave = () => {
     console.log("setando imagem final");
-    setFinalImage(croppedAreaPixels);
+    console.log(`imageSrc `, imageSrc);
+    // setFinalImage(croppedAreaPixels);
   };
 
   return (
@@ -97,7 +84,6 @@ export const AvatarUpload = () => {
                 step={0.1}
                 aria-labelledby="Zoom"
                 onChange={(e, zoom) => onZoomChange(zoom)}
-                classes={{ container: "slider" }}
               />
             </div>
 
@@ -119,8 +105,6 @@ export const AvatarUpload = () => {
           </button>
         </div>
       )}
-
-      {finalImage && <img src={finalImage} />}
     </div>
   );
 };

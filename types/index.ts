@@ -1,1 +1,2 @@
-export * from "./AvatarUpload"
+export * from "./CroppedAreaPixels"
+export * from "./Crop"
