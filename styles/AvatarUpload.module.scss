@@ -46,6 +46,13 @@
   height: 240px;
 }
 
+.finalImage {
+  margin-top: 3px;
+  margin-left: -315px;
+  width: 240px;
+  height: 240px;
+}
+
 .controls {
   min-width: 250px;
   max-width: 250px;
@@ -73,6 +80,7 @@
   width: 85%;
   margin: auto;
   align-items: flex-end;
+  height: 150px;
 }
 
 .save {
@@ -84,6 +92,17 @@
   width: 109px;
   bottom: 90px;
   left: 8px;
+}
+
+.restart {
+  background: #3d485f;
+  border-radius: 16px;
+  color: white;
+  padding: 5px;
+  position: relative;
+  width: 109px;
+  left: 8px;
+  bottom: 0px;
 }
 
 .close {

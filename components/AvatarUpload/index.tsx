@@ -5,12 +5,16 @@ import Cropper from "react-easy-crop";
 import { useState } from "react";
 import { CroppedAreaPixels, Crop } from "../../types";
 import { readFile } from "../../utils/readFile";
+import { dataURLtoFile } from "../../utils/dataURLtoFile";
+import getCroppedImg from "../../utils/cropImage";
 
 export const AvatarUpload: React.FC = () => {
   const [crop, setCrop] = useState<Crop>({ x: 0, y: 0 });
   const [zoom, setZoom] = useState<number>(1);
+  const [croppedArea, setCroppedArea] = useState<CroppedAreaPixels>(null);
   const [imageSrc, setImageSrc] = useState<string>();
   const [finalImage, setFinalImage] = useState<string>();
+  const [result, setResult] = useState<any>();
   const aspect: number = 1;
 
   const onCropChange = (crop: Crop) => {
@@ -18,9 +22,7 @@ export const AvatarUpload: React.FC = () => {
   };
 
   const onCropComplete = (croppedAreaPixels: CroppedAreaPixels) => {
-    console.log(`croppedAreaPixels`, croppedAreaPixels)
-    // console.log(croppedAreaPixels.width / croppedAreaPixels.height);
-    // setFinalImage(imageSrc);
+    setCroppedArea(croppedAreaPixels);
   };
 
   const onZoomChange = (zoom) => {
@@ -38,12 +40,19 @@ export const AvatarUpload: React.FC = () => {
 
   const handleCancel = () => {
     setImageSrc(undefined);
+    setFinalImage(undefined);
+    setZoom(1);
   };
 
-  const handleSave = () => {
-    console.log("setando imagem final");
-    console.log(`imageSrc `, imageSrc);
-    // setFinalImage(croppedAreaPixels);
+  const handleSave = async () => {
+    const canvas = await getCroppedImg(imageSrc, croppedArea);
+    const canvasDataUrl = canvas.toDataURL("image/jpeg");
+    const convertedUrlToFile = dataURLtoFile(
+      canvasDataUrl,
+      "cropped-image.jpeg"
+    );
+    setFinalImage(imageSrc);
+    setResult(convertedUrlToFile);
   };
 
   return (
@@ -61,39 +70,59 @@ export const AvatarUpload: React.FC = () => {
       ) : (
         <div className={styles.App}>
           <div className={styles.cropContainer}>
-            <Cropper
-              image={imageSrc}
-              crop={crop}
-              zoom={zoom}
-              aspect={aspect}
-              cropShape="round"
-              showGrid={true}
-              onCropChange={onCropChange}
-              onCropComplete={onCropComplete}
-              onZoomChange={onZoomChange}
-            />
+            {!result ? (
+              <Cropper
+                image={imageSrc}
+                crop={crop}
+                zoom={zoom}
+                aspect={aspect}
+                cropShape="round"
+                showGrid={true}
+                onCropChange={onCropChange}
+                onCropComplete={onCropComplete}
+                onZoomChange={onZoomChange}
+              />
+            ) : (
+              <img
+                src={result}
+                alt="Image done"
+                className={styles.finalImage}
+              />
+            )}
           </div>
           <div className={styles.actions}>
-            <div className={styles.controls}>
-              <span className={styles.label}>Crop</span>
-              <Slider
-                aria-label="image crop adjustment"
-                value={zoom}
-                min={1}
-                max={3}
-                step={0.1}
-                aria-labelledby="Zoom"
-                onChange={(e, zoom) => onZoomChange(zoom)}
-              />
-            </div>
+            {!finalImage && (
+              <div className={styles.controls}>
+                <span className={styles.label}>Crop</span>
+                <Slider
+                  aria-label="image crop adjustment"
+                  value={zoom}
+                  min={1}
+                  max={3}
+                  step={0.1}
+                  aria-labelledby="Zoom"
+                  onChange={(_, zoom) => onZoomChange(zoom)}
+                />
+              </div>
+            )}
 
-            <button
-              aria-label="button to cancel the edit"
-              className={styles.save}
-              onClick={() => handleSave()}
-            >
-              Save
-            </button>
+            {finalImage ? (
+              <button
+                aria-label="button to restar the process"
+                className={styles.restart}
+                onClick={() => handleCancel()}
+              >
+                Restart
+              </button>
+            ) : (
+              <button
+                aria-label="button to cancel the edit"
+                className={styles.save}
+                onClick={() => handleSave()}
+              >
+                Save
+              </button>
+            )}
           </div>
 
           <button
