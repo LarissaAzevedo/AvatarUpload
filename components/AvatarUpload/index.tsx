@@ -1,12 +1,15 @@
-import React from "react";
-import styles from "../../styles/AvatarUpload.module.scss";
-import Slider from "@material-ui/core/Slider";
-import Cropper from "react-easy-crop";
-import { useState } from "react";
-import { CroppedAreaPixels, Crop } from "../../types";
+import React, { useState } from "react";
+
 import { readFile } from "../../utils/readFile";
 import { dataURLtoFile } from "../../utils/dataURLtoFile";
 import getCroppedImg from "../../utils/cropImage";
+
+import { CropperComponent } from "../Cropper";
+import { SliderComponent } from "../Slider";
+
+import { CroppedAreaPixels, Crop } from "../../types";
+
+import styles from "../../styles/AvatarUpload.module.scss";
 
 export const AvatarUpload: React.FC = () => {
   const [crop, setCrop] = useState<Crop>({ x: 0, y: 0 });
@@ -71,16 +74,16 @@ export const AvatarUpload: React.FC = () => {
         <div className={styles.App}>
           <div className={styles.cropContainer}>
             {!result ? (
-              <Cropper
+              <CropperComponent
                 image={imageSrc}
                 crop={crop}
                 zoom={zoom}
                 aspect={aspect}
-                cropShape="round"
                 showGrid={true}
                 onCropChange={onCropChange}
                 onCropComplete={onCropComplete}
                 onZoomChange={onZoomChange}
+                cropShape="round"
               />
             ) : (
               <img
@@ -92,18 +95,7 @@ export const AvatarUpload: React.FC = () => {
           </div>
           <div className={styles.actions}>
             {!finalImage && (
-              <div className={styles.controls}>
-                <span className={styles.label}>Crop</span>
-                <Slider
-                  aria-label="image crop adjustment"
-                  value={zoom}
-                  min={1}
-                  max={3}
-                  step={0.1}
-                  aria-labelledby="Zoom"
-                  onChange={(_, zoom) => onZoomChange(zoom)}
-                />
-              </div>
+              <SliderComponent zoom={zoom} onZoomChange={onZoomChange} />
             )}
 
             {finalImage ? (
